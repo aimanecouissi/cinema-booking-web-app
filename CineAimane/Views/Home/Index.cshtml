@@ -1,0 +1,209 @@
+﻿@{
+	int counter = 0;
+	ViewData["NavbarStyle"] = "navbar-dark";
+	ViewData["SearchStyle"] = "form-control-clear";
+}
+<partial name="_HomeNavbarPartial" />
+<section id="home" class="bg-black min-vh-100">
+	<div class="owl-carousel-1 owl-carousel owl-theme">
+		@foreach (Movie movie in ViewBag.NowPlaying)
+		{
+			if (counter < 6)
+			{
+				if (movie.Id == 39)
+				{
+					continue;
+				}
+				<div class="item" style="background-image: url('@movie.Backdrop');">
+					<div class="w-100 h-100 position-absolute d-flex align-items-center">
+						<div class="container">
+							<div class="row">
+								<div class="col-lg-6 text-center text-lg-start text-white">
+									<h5 class="fw-semibold text-uppercase">Now Playing</h5>
+									<h1 class="display-4 fw-bold text-uppercase mb-4">@movie.Title</h1>
+									<button href="@movie.Trailer" class="btn btn-clear text-uppercase fw-semibold me-2 py-2 px-4" data-fancybox><i class="fa-solid fa-play me-2"></i>Play Trailer</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				counter++;
+			}
+			else
+			{
+				break;
+			}
+		}
+	</div>
+</section>
+<section id="movies" class="pt-5">
+	<div class="container">
+		<div class="section-title d-flex align-items-center gap-4 mb-3">
+			<h2 class="text-uppercase fw-bold flex-shrink-0 mb-0">Now Playing</h2>
+			<div class="line"></div>
+		</div>
+		@if (ViewBag.NowPlaying.Count == 0)
+		{
+			<div class="row justify-content-center mt-4">
+				<div class="col-12">
+					<div class="alert alert-primary fw-medium rounded-1" role="alert">
+						There are no movies playing right now
+					</div>
+				</div>
+			</div>
+		}
+		else
+		{
+			<div class="row g-3 mt-3">
+				@foreach (Movie movie in ViewBag.NowPlaying)
+				{
+					<div class="col-lg-2 col-md-4 col-6">
+						<a asp-controller="Home" asp-action="Movie" asp-route-id="@(movie.Id)">
+							<div class="movie-poster rounded-1 overflow-hidden position-relative shadow-sm">
+								<img src="@movie.Poster" alt="@movie.Title">
+								<div class="movie-title p-4">
+									<h6 class="text-white text-center text-truncate fw-semibold mb-0">@movie.Title</h6>
+								</div>
+							</div>
+						</a>
+					</div>
+				}
+			</div>
+		}
+	</div>
+</section>
+<section id="coming" class="pt-5">
+	<div class="container">
+		<div class="section-title d-flex align-items-center gap-4 mb-3">
+			<h2 class="text-uppercase fw-bold flex-shrink-0 mb-0">Coming Soon</h2>
+			<div class="line"></div>
+		</div>
+		@if (ViewBag.ComingSoon.Count == 0)
+		{
+			<div class="row justify-content-center mt-4">
+				<div class="col-12">
+					<div class="alert alert-primary fw-medium rounded-1" role="alert">
+						There are no movies coming soon right now
+					</div>
+				</div>
+			</div>
+		}
+		else
+		{
+			<div class="owl-carousel-2 owl-carousel owl-theme mt-4">
+				@foreach (Movie movie in ViewBag.ComingSoon)
+				{
+					<div class="item">
+						<a asp-controller="Home" asp-action="Movie" asp-route-id="@(movie.Id)">
+							<div class="movie-poster rounded-1 overflow-hidden position-relative shadow-sm">
+								<img src="@movie.Poster" alt="@movie.Title">
+								<div class="movie-title p-4">
+									<h6 class="text-white text-center text-truncate fw-semibold mb-0">@movie.Title</h6>
+								</div>
+							</div>
+						</a>
+					</div>
+				}
+			</div>
+		}
+	</div>
+</section>
+<section id="prices" class="pt-5">
+	<div class="container">
+		<div class="section-title d-flex align-items-center gap-4 mb-3">
+			<h2 class="text-uppercase fw-bold flex-shrink-0 mb-0">Ticket Prices</h2>
+			<div class="line"></div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-lg-12">
+				<div class="prices-table rounded-1">
+					<table>
+						<tr>
+							<th>Ticket Type</th>
+							<th>Price</th>
+						</tr>
+						<tr>
+							<td>Child (-12 year)</td>
+							<td>$4.50</td>
+						</tr>
+						<tr>
+							<td>Student</td>
+							<td>$5.00</td>
+						</tr>
+						<tr>
+							<td>Before 04:00 PM</td>
+							<td>$5.50</td>
+						</tr>
+						<tr>
+							<td>After 04:00 PM</td>
+							<td>$6.50</td>
+						</tr>
+						<tr>
+							<td>VIP Seat</td>
+							<td>$1.00</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section id="contact" class="py-5" style="padding-bottom: 110px !important;">
+	<div class="container">
+		<div class="section-title d-flex align-items-center gap-4 mb-3">
+			<h2 class="text-uppercase fw-bold flex-shrink-0 mb-0">Contact Us</h2>
+			<div class="line"></div>
+		</div>
+		<div class="row mt-4 g-3">
+			<div class="col-md-6">
+				<form action="https://formsubmit.co/103feee3b126f9da85fda2f36e72ee06" method="POST" autocomplete="off" target="_blank">
+					<div class="mb-3">
+						<div class="position-relative">
+							<input type="text" name="name" class="form-control form-control-lg" placeholder="Name" required>
+							<div class="form-control-icon">
+								<i class='bx bx-user'></i>
+							</div>
+						</div>
+					</div>
+					<div class="mb-3">
+						<div class="position-relative">
+							<input type="email" name="email" class="form-control form-control-lg" placeholder="Email" required>
+							<div class="form-control-icon">
+								<i class='bx bx-envelope'></i>
+							</div>
+						</div>
+					</div>
+					<div class="mb-3">
+						<div class="position-relative">
+							<textarea name="message" rows="7" class="form-control form-control-lg" placeholder="Message" required></textarea>
+							<div class="form-control-icon">
+								<i class='bx bx-message'></i>
+							</div>
+						</div>
+					</div>
+					<input type="text" name="_honey" style="display:none">
+					<input type="hidden" name="_captcha" value="true">
+					<div class="d-grid">
+						<input type="submit" value="Send" class="btn btn-lg btn-primary btn-block text-uppercase fw-semibold">
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6 ps-2 d-none d-md-block rounded-1">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.573211304535!2d-6.847840584855677!3d34.00349458061931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda76c89d87752c9%3A0xfa1d80a264d4ba2b!2sArribat%20Center!5e0!3m2!1sen!2sma!4v1670282430143!5m2!1sen!2sma" class="w-100 h-100 border rounded-1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div>
+		</div>
+	</div>
+</section>
+@section Styles {
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui@4.0/dist/fancybox.css">
+	<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+}
+@section Scripts {
+	<script src="https://cdn.jsdelivr.net/npm/@@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script src="https://github.com/jquery/jquery-mousewheel/blob/main/jquery.mousewheel.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,60 @@
+﻿@model AdminResetViewModel
+@{
+	ViewData["Title"] = "Reset Password";
+}
+<div class="bg-blob min-vh-100 d-flex align-items-center justify-content-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-4 col-md-6 col-sm-9 col-10">
+				<div class="rounded-1 border px-4 py-5 pb-4 bg-white">
+					<h2 class="fw-bold text-center mb-5 text-black"><span class="text-primary">Reset</span> Password</h2>
+					<form method="post" class="login-form" autocomplete="off">
+						@if (ViewBag.Error != null)
+						{
+							<div class="alert alert-danger rounded-1 fw-medium mb-3" role="alert">@ViewBag.Error</div>
+						}
+						@if (ViewBag.Errors != null)
+						{
+							<div class="alert alert-danger rounded-1 fw-medium mb-3" role="alert">
+								@foreach (IdentityError error in ViewBag.Errors)
+								{
+									<p class="mb-0">@error.Description</p>
+								}
+							</div>
+						}
+						@if (ViewBag.Message != null)
+						{
+							<div class="alert alert-success fw-medium rounded-1 mb-3" role="alert">@Html.Raw(ViewBag.Message)</div>
+						}
+						<div class="mb-3">
+							<div class="position-relative">
+								<input type="password" asp-for="NewPassword" class="form-control form-control-lg" placeholder="New password" required>
+								<div class="form-control-icon">
+									<i class='bx bx-lock-alt'></i>
+								</div>
+							</div>
+							<span asp-validation-for="NewPassword" class="text-danger d-block mt-2"></span>
+						</div>
+						<div class="mb-3">
+							<div class="position-relative">
+								<input type="password" asp-for="ConfirmNewPassword" class="form-control form-control-lg" placeholder="Confirm new password" required>
+								<div class="form-control-icon">
+									<i class='bx bx-lock-alt'></i>
+								</div>
+							</div>
+							<span asp-validation-for="ConfirmNewPassword" class="text-danger d-block mt-2"></span>
+						</div>
+						<input asp-for="Email" type="hidden" />
+						<input asp-for="Token" type="hidden" />
+						<div class="d-grid">
+							<input type="submit" value="Reset" class="btn btn-lg btn-primary btn-block text-uppercase fw-semibold">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

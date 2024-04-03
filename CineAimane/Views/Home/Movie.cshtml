@@ -1,0 +1,125 @@
+﻿@model MovieViewModel
+@{
+	List<string> showtimes = new List<string>();
+	ViewData["Title"] = Model.Movie.Title;
+	ViewData["NavbarStyle"] = "bg-white border-bottom";
+}
+<partial name="_HomeNavbarPartial" />
+<div class="padding-top min-vh-100">
+	<div class="container my-4">
+		<div class="section-title d-flex align-items-center gap-4 mb-3" data-aos="fade-up">
+			<h2 class="text-uppercase fw-bold flex-shrink-0 mb-0">Movie Details</h2>
+			<div class="line"></div>
+		</div>
+		<div class="row gx-4 mt-4">
+			<div class="col-lg-3 col-md-4 col-sm-5 col-12 mb-3 mb-sm-0">
+				<div class="movie-poster rounded-1 rounded-bottom-0 overflow-hidden">
+					<img src="@Model.Movie.Poster" alt="@Model.Movie.Title" asp-append-version="true">
+				</div>
+				@if (Model.Movie.StartDate <= DateTime.Now)
+				{
+					<div class="d-grid">
+						<button data-bs-toggle="modal" data-bs-target="#ticketModal" class="btn btn-primary btn-block text-uppercase fw-semibold py-2 rounded-top-0"><i class="fa-solid fa-ticket me-2"></i>Get Ticket</button>
+					</div>
+					<div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-sm">
+							<div class="modal-content overflow-hidden rounded-1">
+								<div class="modal-header">
+									<h1 class="modal-title fw-semibold fs-5" id="exampleModalLabel"><i class="fa-solid fa-ticket me-2 text-primary"></i>Get Ticket</h1>
+								</div>
+								<form asp-controller="Home" asp-action="Checkout" method="post" class="normal-form">
+									<div class="modal-body bg-light pt-2">
+										<div class="mb-2">
+											<label asp-for="@Model.SelectedShowdate" class="form-label fw-medium mb-1">Screening Date</label>
+											<input asp-for="@Model.SelectedShowdate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@Model.Movie.EndDate.ToString("yyyy-MM-dd")" required>
+										</div>
+										<div class="">
+											<label asp-for="@Model.SelectedShowtime" class="form-label fw-medium mb-1">Screening Time</label>
+											<select asp-for="@Model.SelectedShowtime" asp-items="@Model.Showtimes" class="form-select" required></select>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<div class="d-flex justify-content-end">
+											<button type="submit" class="link-button fw-semibold text-uppercase d-inline-flex">Checkout</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+			<div class="col-lg-9 col-md-8 col-sm-7 col-12 mt-3 mt-sm-0">
+				<h1 class="fw-bold text-uppercase text-truncate">@Model.Movie.Title</h1>
+				<p class="fs-6">
+					<span class="badge rounded-pill text-bg-primary">@Model.Movie.Genres</span>
+					<span class="badge rounded-pill text-bg-primary">@Model.Movie.Duration</span>
+					<span class="badge rounded-pill text-bg-primary">@Model.Movie.Rating.GetDisplayName()</span>
+				</p>
+				<div class="bg-light-subtle border border rounded-1 p-3 mb-3">
+					<table class="details-table">
+						<tr>
+							<td><span class="fw-semibold">Release date</span></td>
+							<td><span class="fw-semibold">:</span></td>
+							<td>@Model.Movie.ReleaseDate.ToString("MM/dd/yyyy")</td>
+						</tr>
+						<tr>
+							<td><span class="fw-semibold">Director</span></td>
+							<td><span class="fw-semibold">:</span></td>
+							<td>@Model.Movie.Director</td>
+						</tr>
+						<tr>
+							<td><span class="fw-semibold">Top cast</span></td>
+							<td><span class="fw-semibold">:</span></td>
+							<td>@Model.Movie.Cast</td>
+						</tr>
+						<tr>
+							<td><span class="fw-semibold">Start date</span></td>
+							<td><span class="fw-semibold">:</span></td>
+							<td>@Model.Movie.StartDate.ToString("MM/dd/yyyy")</td>
+						</tr>
+						<tr>
+							<td><span class="fw-semibold">End date</span></td>
+							<td><span class="fw-semibold">:</span></td>
+							<td>@Model.Movie.EndDate.ToString("MM/dd/yyyy")</td>
+						</tr>
+						@if (Model.Showtimes != null)
+						{
+							if (Model.Showtimes.Any())
+							{
+								<tr>
+									<td><span class="fw-semibold">Sessions</span></td>
+									<td><span class="fw-semibold">:</span></td>
+									<td>
+										@foreach (var showtime in Model.Movie.Showtimes.Where(s => s.IsDeleted == false))
+										{
+											showtimes.Add(showtime.Time);
+										}
+										@string.Join(',', showtimes).Replace(",", " - ")
+									</td>
+								</tr>
+							}
+						}
+						<tr>
+							<td><span class="fw-semibold">Overview</span></td>
+							<td><span class="fw-semibold">:</span></td>
+							<td class="text-justify">@Model.Movie.Overview</td>
+						</tr>
+					</table>
+				</div>
+				@if (Model.Movie.Trailer != "https://youtu.be/os2C0TdDphc")
+				{
+					<div class="ratio ratio-16x9 rounded-1">
+						<iframe src="https://www.youtube.com/embed/@Model.Movie.Trailer.Substring(Model.Movie.Trailer.LastIndexOf('/'))" allowfullscreen class="rounded-1"></iframe>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+@section Styles {
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+}
+@section Scripts {
+	<partial name="_ToastScriptsPartial" />
+}

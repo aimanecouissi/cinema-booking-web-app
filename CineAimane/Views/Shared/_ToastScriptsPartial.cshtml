@@ -1,0 +1,31 @@
+﻿@if (TempData["Success"] != null || TempData["Info"] != null)
+{
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script>
+		toastr.options = {
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": true,
+			"positionClass": "toast-top-right",
+			"preventDuplicates": true,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+		@if (TempData["Success"] != null)
+		{
+			@:Command: toastr["success"]("@TempData["Success"]")
+		}
+		else
+		{
+			@:Command: toastr["info"]("@TempData["Info"]")
+		}
+	</script>
+}

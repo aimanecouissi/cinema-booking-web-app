@@ -1,0 +1,69 @@
+# ASP.NET Core
+bin/
+obj/
+
+# Visual Studio Code
+.vscode/
+
+# NuGet
+*.nuget.props
+*.nuget.targets
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio
+VisualStudio/
+.vs/
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.sdf
+*.opensdf
+*.unsuccessfulbuild
+ipch/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+[Bb]uild[Ww]rapper[Oo]utput.*
+[Oo]bj/
+[Ll]og/
+[Tt]emp/
+[Nn]uGet[Rr]estore/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Rider
+.idea/
+*.sln.iml
+
+# Build tooling
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/Properties/launchSettings.json

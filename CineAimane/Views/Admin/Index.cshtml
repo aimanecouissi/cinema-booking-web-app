@@ -1,0 +1,56 @@
+﻿@model AdminLoginViewModel
+@{
+	ViewData["Title"] = "Admin";
+}
+<div class="bg-blob d-flex align-items-center justify-content-center min-vh-100">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-5 col-md-6 col-sm-9 col-10 col-xl-4">
+				<div class="bg-white border rounded-1 px-4 pt-5 pb-4">
+					<a asp-controller="Home" asp-action="Index"><h2 class="text-black text-center fw-bold mb-5"><i class="fa-solid fa-clapperboard me-2 text-primary"></i>CineAimane</h2></a>
+					<form method="post" class="login-form" autocomplete="off">
+						@if (ViewBag.Error != null)
+						{
+							<div class="alert alert-danger rounded-1 fw-medium mb-3" role="alert">@ViewBag.Error</div>
+						}
+						<div class="mb-3">
+							<div class="position-relative">
+								<input type="text" asp-for="Username" class="form-control form-control-lg" placeholder="Username" required>
+								<div class="form-control-icon">
+									<i class='bx bx-user'></i>
+								</div>
+							</div>
+							<span asp-validation-for="Username" class="text-danger d-block mt-2"></span>
+						</div>
+						<div class="mb-3">
+							<div class="position-relative">
+								<input type="password" asp-for="Password" class="form-control form-control-lg" placeholder="Password" required>
+								<div class="form-control-icon">
+									<i class='bx bx-lock-alt'></i>
+								</div>
+							</div>
+							<span asp-validation-for="Password" class="text-danger d-block mt-2"></span>
+						</div>
+						<div class="row mb-3">
+							<div class="col-6">
+								<div class="form-check">
+									<input type="checkbox" asp-for="RememberMe" class="form-check-input">
+									<label class="form-check-label" asp-for="RememberMe">Remember me</label>
+								</div>
+							</div>
+							<div class="col-6 text-end">
+								<a asp-controller="Admin" asp-action="Forgot" class="my-0 py-0">Forgot password?</a>
+							</div>
+						</div>
+						<div class="d-grid">
+							<input type="submit" value="Login" class="btn btn-primary btn-lg btn-block text-uppercase fw-semibold">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

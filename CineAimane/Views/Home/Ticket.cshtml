@@ -1,0 +1,56 @@
+﻿@{
+	ViewData["Title"] = "Ticket";
+	ViewData["NavbarStyle"] = "bg-white border-bottom";
+}
+@model TicketViewModel
+<partial name="_HomeNavbarPartial" />
+<div class="padding-top min-vh-100 d-flex align-items-center justify-content-center bg-blob">
+	<div class="container my-4">
+		@*<div class="row justify-content-center">
+		<div class="col-lg-8 text-center">
+		<h1 class="text-uppercase display-3 fw-bold text-black">Thank You</h1>
+		<p class="text-muted">We have received your payment, you can now download your ticket from the button below. We have also sent it to the email address you provided before.</p>
+		</div>
+		</div>*@
+		<div class="row justify-content-center mb-3">
+			<div class="toprint col-8 col-sm-8 col-md-6 col-lg-3">
+				<div class="box rounded-1 border">
+					<div class="box-header p-3 bg-white border-bottom-dashed rounded-1">
+						<h5 class="fw-semibold mb-0 text-uppercase text-primary">Ticket <span class="text-black">N°@Model.TicketNumber.ToString()</span></h5>
+					</div>
+					<div class="box-body bg-light-subtle rounded-1 rounded-top-0 ticket">
+						<div class="row gx-1 align-items-center">
+							<div class="col-12">
+								<div class="p-3">
+									<h6 class="mb-4 fw-medium text-truncate text-uppercase"><span class="me-2" style="color: purple;"><i class="fa-regular fa-circle-user"></i></span>@Model.FullName</h6>
+									<h6 class="mb-4 fw-medium text-truncate text-uppercase"><span class="me-2" style="color:#ff595e;"><i class="fa-solid fa-film"></i></span>@Model.MovieTitle</h6>
+									<h6 class="mb-4 fw-medium"><span class="me-2" style="color:#ffca3a;"><i class="fa-regular fa-calendar"></i></span>@Model.Date.ToShortDateString()</h6>
+									<h6 class="mb-4 fw-medium"><span class="me-2" style="color:#8ac926;"><i class="fa-regular fa-clock"></i></span>@Model.Time</h6>
+									<h6 class="mb-0 fw-medium"><span class="me-2" style="color:#1982c4;"><i class="fa-solid fa-ticket"></i></span>$5.00</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-footer p-3 bg-white border-top-dashed rounded-1 text-center">
+						<img src="@Url.Action("GenerateBarcode", "Home", new { toEncode = Model.TicketNumber})" class="img-fluid" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-8 col-sm-8 col-md-6 col-lg-3 text-center d-grid">
+				<a class="btn btn-primary btn-block text-uppercase fw-medium">Download Ticket</a>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<script src="~/js/printThis.js" asp-append-version="true"></script>
+	<script>
+		$(document).ready(function () {
+			$(".btn-primary").click(function () {
+				$(".toprint").clone().width(300).printThis();
+			});
+		});
+	</script>
+}

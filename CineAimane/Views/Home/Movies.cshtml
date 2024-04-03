@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Movie>
+@{
+	ViewData["Title"] = "Search Results";
+	ViewData["NavbarStyle"] = "bg-white border-bottom";
+}
+<partial name="_HomeNavbarPartial" />
+<div class="padding-top min-vh-100">
+	<div class="container my-4">
+		<div class="section-title d-flex align-items-center gap-4 mb-3" data-aos="fade-up">
+			<h2 class="text-uppercase fw-bold flex-shrink-0 mb-0">@ViewData["Title"]</h2>
+			<div class="line"></div>
+		</div>
+		@if (Model.Any())
+		{
+			<div class="row mt-2 g-3">
+				@foreach (Movie movie in Model)
+				{
+					<div class="col-lg-2 col-md-4 col-6">
+						<a asp-controller="Home" asp-action="Movie" asp-route-id="@movie.Id">
+							<div class="movie-poster rounded-1 overflow-hidden position-relative shadow-sm">
+								<img src="@movie.Poster" alt="@movie.Title" asp-append-version="true">
+								<div class="movie-title p-4">
+									<h6 class="text-white text-center text-truncate fw-semibold mb-0">@movie.Title</h6>
+								</div>
+							</div>
+						</a>
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<div class="row mt-4">
+				<div class="col-12">
+					<div class="alert alert-primary fw-medium rounded-1" role="alert">
+						Movies not found
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

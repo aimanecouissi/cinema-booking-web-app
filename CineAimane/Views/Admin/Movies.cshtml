@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Movie>
+@{
+	ViewData["Title"] = "All Movies";
+	PaginationHelper pagination = ViewBag.Pagination;
+}
+<partial name="_AdminNavbarPartial" />
+<div class="padding-top min-vh-100">
+	<div class="container my-4">
+		<div class="section-title d-flex align-items-center gap-4 mb-3" data-aos="fade-up">
+			<h2 class="text-uppercase fw-bold flex-shrink-0 mb-0">@ViewData["Title"]</h2>
+			<div class="line"></div>
+		</div>
+		<div class="row justify-content-end">
+			<div class="col-12">
+				<form method="get" asp-controller="Admin" asp-action="Movies" autocomplete="off">
+					<div class="position-relative">
+						<input type="search" name="search" id="search" class="form-control form-control-lg" placeholder="Search" value="@(ViewBag.Search ?? String.Empty)" required>
+						<div class="form-control-icon">
+							<i class='bx bx-search'></i>
+						</div>
+						<input type="submit" hidden />
+					</div>
+				</form>
+			</div>
+		</div>
+		@if (Model.Any())
+		{
+			<div class="row mt-2 g-3">
+				@foreach (Movie movie in Model)
+				{
+					<div class="col-lg-2 col-md-4 col-6">
+						<a asp-controller="Admin" asp-action="Edit" asp-route-id="@movie.Id">
+							<div class="movie-poster rounded-1 overflow-hidden position-relative shadow-sm">
+								<img src="@movie.Poster" alt="@movie.Title" asp-append-version="true">
+								<div class="movie-title p-4">
+									<h6 class="text-white text-center text-truncate fw-semibold mb-0">@movie.Title</h6>
+								</div>
+							</div>
+						</a>
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<div class="row mt-4">
+				<div class="col-12">
+					<div class="alert alert-primary fw-medium rounded-1" role="alert">
+						Movies not found
+					</div>
+				</div>
+			</div>
+		}
+		@if (pagination.TotalPages > 1)
+		{
+			<nav class="mt-4">
+				<ul class="pagination justify-content-center">
+					<li class="page-item @(!(pagination.CurrentPage > 1) ? "disabled" : "")"><a class="page-link" asp-controller="Admin" asp-action="Movies" asp-route-page="@(pagination.CurrentPage - 1)" asp-route-search="@ViewBag.Search">Previous</a></li>
+					@for (int page = pagination.StartPage; page <= pagination.EndPage; page++)
+					{
+						<li class="page-item"><a class="page-link @(page == pagination.CurrentPage ? "active" : "")" asp-controller="Admin" asp-action="Movies" asp-route-page="@(page)" asp-route-search="@ViewBag.Search">@(page)</a></li>
+					}
+					<li class="page-item @(!(pagination.CurrentPage < pagination.TotalPages) ? "disabled" : "")"><a class="page-link" asp-controller="Admin" asp-action="Movies" asp-route-page="@(pagination.CurrentPage + 1)" asp-route-search="@ViewBag.Search">Next</a></li>
+				</ul>
+			</nav>
+		}
+	</div>
+</div>
+@section Styles {
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+}
+@section Scripts {
+	<partial name="_ToastScriptsPartial" />
+}
