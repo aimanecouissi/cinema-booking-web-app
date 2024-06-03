@@ -18,7 +18,7 @@ Welcome to the Cinema Booking Web Application repository! This web application w
 
 ## DEMO
 
-Explore the application in action by watching the video demonstration available in [my portfolio](https://www.aimanecouissi.com/).
+Explore the application in action by watching the video demonstration available in [YouTube](https://youtu.be/md3oHAhkOto).
 
 ## INSTALLATION
 
